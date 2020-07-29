@@ -1,0 +1,5 @@
+data/
+env/
+Titrations/
+.DS_Store
+curate.py
