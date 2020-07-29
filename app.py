@@ -5,20 +5,13 @@ import mplcyberpunk
 import datetime
 import time
 
-# Create a .txt to .csv conversion function
-# Create case for rows E-H
-# How to calculate IC50 from this data
-   # - Slope of absorbance vs time
-# How is this normally plotted?
-# Can I see a sample plot of this protocol?
-
-
-
-
+# Selecting columns with absorbance data
 columns = [0,2,3,4,5,6,7,8,9,10,11,12,13]
 
+filepath = 'path/filename'
+
 # Read Raw Data
-df = pd.read_csv('data/pnppassayrawdata/atw122-2.csv', 
+df = pd.read_csv(filepath, 
     header=2,
     usecols=columns, 
     skip_blank_lines=True)
