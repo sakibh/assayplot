@@ -8,7 +8,7 @@ import time
 # Selecting columns with absorbance data
 columns = [0,2,3,4,5,6,7,8,9,10,11,12,13]
 
-filepath = 'path/filename'
+filepath = 'data/pnppassayrawdata/'
 
 # Read Raw Data
 df = pd.read_csv(filepath, 
@@ -20,6 +20,30 @@ df = pd.read_csv(filepath,
 df_2 = df[df['2'].notna()]
 df_2.columns = [0,1,2,3,4,5,6,7,8,9,10,11,12]
 df_2.index = range(len(df_2))
+
+'''
+Subtract Row D1-11 from A, B, C 1-11
+Subtract ligand concentration from experimental conditions
+Grabs the columns and rows from df_2
+The for loop subtracts every 4th row from the last three rows and appends to the list
+The list contains many dataframes that get concatenated to one dataframe
+Note: This may be very inefficient on much larger datasets and utilizing numpy arrays may be the way to go.
+'''
+
+df_sub = df_2.iloc[:, 1:13]
+
+data=[]
+
+k = 3
+n = 0
+for i in range(0, len(df_sub)):
+    if k <= len(df_sub):
+        data.append(df_sub[n:k] - df_sub.iloc[k])
+        k += 4
+        n += 4
+
+df_sub = pd.concat(data)
+print(df_sub)
 
 # Remove all rows except fourth row (Negative Control)
 df_5 = df_2[df_2.index % 4 == 3]
