@@ -7,3 +7,5 @@ default.profraw
 test-diff.py
 txt_to_csv.py
 backup-app.py
+uploader/node_modules/
+uploader/README.md
