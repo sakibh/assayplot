@@ -3,3 +3,7 @@ env/
 Titrations/
 .DS_Store
 curate.py
+default.profraw
+test-diff.py
+txt_to_csv.py
+backup-app.py

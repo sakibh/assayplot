@@ -42,17 +42,14 @@ for i in range(0, len(df_sub)):
         k += 4
         n += 4
 
+# Combine multiple dataframes
 df_sub = pd.concat(data)
-print(df_sub)
+
+# Calculate the mean
+df_mean = df_sub.groupby(df_sub.index // 4).mean()
 
 # Remove all rows except fourth row (Negative Control)
 df_5 = df_2[df_2.index % 4 == 3]
-print(df_5)
-
-# Remove every fourth and take the mean and standard deviation of the first three sets in each column
-df_3 = df_2[df_2.index % 4 != 3]
-df_4 = df_3.groupby(df_3.index // 4).mean()     
-# print(df_3.groupby(df_3.index // 4).std())
 
 # Get time intervals and convert to seconds
 time_interval = pd.Series(df_2[0].dropna())
@@ -66,13 +63,14 @@ for i in time_interval:
 compound_conc = ['200 uM', '100 uM', '50 uM', '25 uM', '12.5 uM', '6.25 uM', '3.125 uM', '1.5625 uM', '0.78125 uM', '0.3906 uM', '0.1953 uM', '+Control (Protein)']
 
 # Colors for Each Line
-line_colors = ['cyan', 'deepskyblue', 'steelblue', 'dodgerblue', 'blue', 'navy', 'orange', 'salmon', 'red', 'maroon', 'magenta', 'yellow']
+line_colors = ['#03045e', '#023e8a', '#0077b6', '#0096c7', '#00b4d8', '#48cae4', '#90e0ef', '#ade8f4', '#caf0f8', '#D6EAF8', '#EBF5FB', 'yellow']
 
 # Plot DataFrame
 plt.style.use("cyberpunk")
-for i in df_4.columns:
-    plt.plot(seconds, df_4[i], marker='o', label=compound_conc[i-1], color=line_colors[i-1])
-plt.plot(seconds, df_5[1], marker='o', label='-Control (No Prot)', color='gray')
+for i in df_mean.columns:
+    # plt.plot(seconds, df_4[i], marker='o', label=compound_conc[i-1], color=line_colors[i-1])
+    plt.plot(seconds, df_mean[i], marker='o', label=compound_conc[i-1], color=line_colors[i-1])
+plt.plot(seconds, df_5[1], marker='o', label='-Control (No Prot)', color='red')
 
 plt.legend()
 plt.title('Compound in 5% DMSO')
