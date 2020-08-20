@@ -13,21 +13,32 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 CORS(app)
 
+def allowed_file(filename):
+	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/upload', methods=['POST'])
+@app.route('/api/upload', methods=['POST'])
 def uploadData():
-    target = os.path.join(UPLOAD_FOLDER, )
-    if not os.path.isdir(target):
-        os.mkdir(target)
-    file = request.files['file']
-    filename = secure_filename(file.filename)
-    destination = "/".join([target, filename])
-    file.save(destination)
-    session['uploadFilePath'] = destination
-    response = "Success!"
-    return response
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            print('No file selected')
+            return 'No file selected'
+        file = request.files['file']
+        plot_title = request.form["title"]
+        if file.filename == '':
+            print('No file selected for uploading')
+            return 'No files selected'
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            print('File successfully uploaded')
+            print(plot_title)
+            return 'Success!'
+        else:
+            print('Allowed file types: txt, csv')
+            return 'Try again!'
 
-@app.route('/data', methods=['GET'])
+@app.route('/api/data', methods=['GET'])
 def getData():
     return "Data"
 
