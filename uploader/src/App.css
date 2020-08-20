@@ -1,20 +1,10 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body {
+  background-color: #050506;
+  font-family: 'Roboto', sans-serif;
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #050506;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -24,15 +14,28 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.formContainer {
+  color: white;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.transparent-textbox {
+  background: transparent;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.file-upload-container {
+  padding-top: 30px;
+  padding-bottom: 10px;
+  padding-left: 90px;
+}
+
+.custom-file-upload {
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
 }
